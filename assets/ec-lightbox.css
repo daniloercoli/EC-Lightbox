@@ -1,0 +1,12 @@
+/* assets/ec-lightbox.css */
+
+/* Optional tweak: make sure lightbox cursor indicates zoom. */
+.wp-lightbox-container a img {
+    cursor: zoom-in;
+}
+
+/* Nascondi il bottone nativo di WP "Enlarge" */
+.wp-lightbox-container .lightbox-trigger {
+    display: none !important;
+}
+
