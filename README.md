@@ -77,3 +77,53 @@ To ensure EC Lightbox overrides WordPress behavior, you must:
 3. Make sure individual images inside the gallery do **not** have click settings assigned.
 
 If these WP-native actions remain enabled, WordPress will attach its own click/lightbox behavior, overriding this plugin.
+
+---
+
+## ⚙️ Settings Page (WordPress Admin)
+
+A configuration screen is available at:
+
+**Settings → EC Lightbox**
+
+Available options:
+
+- **Use CDN for GLightbox**  
+  Loads GLightbox assets from:  
+  `https://cdn.jsdelivr.net/npm/glightbox/`  
+  Instead of the bundled local vendor files.
+
+- **Loop images**  
+- **Enable touch navigation**  
+- **Enable zoom**  
+- **Autoplay videos** (for future video support)
+
+All settings are passed directly to the lightbox JavaScript on initialization.
+
+---
+
+## 🧩 Filters & Developer API
+
+### 1. Override or disable CDN loading
+
+```php
+add_filter( 'ec_lightbox_use_cdn', '__return_false' ); // force local files
+add_filter( 'ec_lightbox_use_cdn', '__return_true' );  // force CDN globally
+```
+
+This overrides both plugin defaults and admin UI settings.
+
+### 2. Modify GLightbox options programmatically
+
+```php
+add_filter( 'ec_lightbox_js_options', function ( $options ) {
+    $options['loop'] = true;
+    $options['zoomable'] = false;
+    $options['openEffect'] = 'zoom';   // Any GLightbox option is accepted
+    return $options;
+});
+```
+Options merged from:
+1. Plugin defaults
+2. Admin settings
+3. This filter (highest priority)

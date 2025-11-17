@@ -5,6 +5,9 @@
             return;
         }
 
+        // Base options coming from PHP (via wp_localize_script).
+        var baseOptions = (typeof window.ecLightboxOptions === 'object' && window.ecLightboxOptions) ? window.ecLightboxOptions : {};
+
         // All containers where the user explicitly added the "ec-lightbox" class.
         var containers = document.querySelectorAll('.ec-lightbox');
         if (!containers.length) {
@@ -67,10 +70,23 @@
                 }
             });
 
+            // Build options for this specific gallery:
+            // merge baseOptions + selector for this gallery.
+            var options = {};
+            var key;
+
+            // Copy base options.
+            for (key in baseOptions) {
+                if (Object.prototype.hasOwnProperty.call(baseOptions, key)) {
+                    options[key] = baseOptions[key];
+                }
+            }
+
+            // Add selector for this gallery only.
+            options.selector = 'a.ec-lightbox-link.' + galleryClass;
+
             // Initialize a separate GLightbox instance for this gallery only.
-            GLightbox({
-                selector: 'a.ec-lightbox-link.' + galleryClass
-            });
+            GLightbox(options);
         });
     }
 
