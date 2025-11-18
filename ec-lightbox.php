@@ -276,3 +276,21 @@ function ec_lightbox_render_settings_page() {
     </div>
     <?php
 }
+
+/**
+ * Add "Settings" link to the plugin row in plugins.php.
+ */
+function ec_lightbox_plugin_action_links( $links ) {
+    $url = admin_url( 'options-general.php?page=ec-lightbox' );
+
+    $settings_link = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'ec-lightbox' ) . '</a>';
+
+    array_unshift( $links, $settings_link );
+
+    return $links;
+}
+add_filter(
+    'plugin_action_links_' . plugin_basename( __FILE__ ),
+    'ec_lightbox_plugin_action_links'
+);
+
