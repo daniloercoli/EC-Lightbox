@@ -25,6 +25,7 @@ function ec_lightbox_get_options() {
         'touch_navigation'=> 1,
         'zoomable'        => 1,
         'autoplay_videos' => 0,
+        'add_referrer_policy' => 0,
     );
 
     $saved = get_option( 'ec_lightbox_options', array() );
@@ -108,6 +109,7 @@ function ec_lightbox_enqueue_assets() {
         'loop'            => ! empty( $options['loop'] ),
         'zoomable'        => ! empty( $options['zoomable'] ),
         'autoplayVideos'  => ! empty( $options['autoplay_videos'] ),
+        'addReferrerPolicy'=> ! empty( $options['add_referrer_policy'] )
     );
 
     /**
@@ -166,6 +168,7 @@ function ec_lightbox_sanitize_options( $input ) {
     $output['touch_navigation'] = ! empty( $input['touch_navigation'] ) ? 1 : 0;
     $output['zoomable']         = ! empty( $input['zoomable'] ) ? 1 : 0;
     $output['autoplay_videos']  = ! empty( $input['autoplay_videos'] ) ? 1 : 0;
+    $output['add_referrer_policy'] = ! empty( $input['add_referrer_policy'] ) ? 1 : 0;
 
     return $output;
 }
@@ -215,6 +218,9 @@ function ec_lightbox_render_settings_page() {
                             <?php esc_html_e( 'Lightbox behavior', 'ec-lightbox' ); ?>
                         </th>
                         <td>
+                            <p class="description">
+                                <?php esc_html_e( 'These options are passed to GLightbox on initialization for each gallery.', 'ec-lightbox' ); ?>
+                            </p>
                             <label>
                                 <input type="checkbox"
                                     name="ec_lightbox_options[loop]"
@@ -242,9 +248,16 @@ function ec_lightbox_render_settings_page() {
                                     value="1" <?php checked( $options['autoplay_videos'], 1 ); ?> />
                                 <?php esc_html_e( 'Autoplay videos (if used in future)', 'ec-lightbox' ); ?>
                             </label>
+                            <br/>
+                            <label>
+                                <input type="checkbox"
+                                    name="ec_lightbox_options[add_referrer_policy]"
+                                    value="1" <?php checked( $options['add_referrer_policy'], 1 ); ?> />
+                                <?php esc_html_e( 'Add referrerpolicy="some-origin" to gallery images', 'ec-lightbox' ); ?>
+                            </label>
 
                             <p class="description">
-                                <?php esc_html_e( 'These options are passed to GLightbox on initialization for each gallery.', 'ec-lightbox' ); ?>
+                                <?php esc_html_e( 'When enabled, all <img> elements inside ec-lightbox containers will include referrerpolicy="some-origin".', 'ec-lightbox' ); ?>
                             </p>
                         </td>
                     </tr>

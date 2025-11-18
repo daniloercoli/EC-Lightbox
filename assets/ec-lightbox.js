@@ -68,6 +68,10 @@
                 if (caption) {
                     link.setAttribute('data-title', caption);
                 }
+
+                if (baseOptions.addReferrerPolicy) {
+                    img.setAttribute('referrerpolicy', 'same-origin');
+                }
             });
 
             // Build options for this specific gallery:
